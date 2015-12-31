@@ -1,3 +1,5 @@
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,7 @@
     <!-- Include Styles -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
 
@@ -70,12 +72,18 @@
                 </thead>
                 <tbody>
                 <!-- Start Students Line -->
+                {{ name }}
+                {{ date }}
+                {{ year }}
+                {% for student in students %}
                 <tr>
-                    <td>1</td>
-                    <td><img class="img-circle" height="30" width="30" src="./img/icon-book2.png" alt="test"></td>
-                    <td><a title="edit" href="{% url 'students_edit' 1 %}">Dizhak</a></td>
-                    <td><a title="edit" href="{% url 'students_edit' 1 %}">Julia</a></td>
-                    <td>2123</td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        <img class="img-circle" height="30" width="30" src="{% static student.image %}" alt="test">
+                    </td>
+                    <td><a title="edit" href="{% url 'students_edit' 1 %}">{{ student.last_name }}</a></td>
+                    <td><a title="edit" href="{% url 'students_edit' 1 %}">{{ student.first_name }}</a></td>
+                    <td>{{ student.ticket }}</td>
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle"
@@ -88,82 +96,19 @@
                                     <a role="menuitem" tabindex="-1" href="{% url 'home' %}">Student 1</a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'students_edit' 1 %}">student edit</a>
+                                    <a role="menuitem" tabindex="-1" href="{% url 'students_edit' student.id %}">student edit</a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="/journal/1">student visit</a>
+                                    <a role="menuitem" tabindex="-1" href="/journal/{{ student.id }}">student visit</a>
                                 </li>
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'students_delete' 1 %}">student delete</a>
+                                    <a role="menuitem" tabindex="-1" href="{% url 'students_delete' student.id %}">student delete</a>
                                 </li>
                             </ul>
                         </div>
                     </td>
                 </tr>
-                <!-- End Students Students Line -->
-                <!-- Start Students Line -->
-                <tr>
-                    <td>2</td>
-                    <td><img class="img-circle" height="30" width="30" src="./img/define-icon.png" alt="test"></td>
-                    <td><a title="Редагувати" href="#">Dizhak</a></td>
-                    <td><a title="Редагувати" href="#">Vasyl</a></td>
-                    <td>2</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle"
-                                    type="button"
-                                    data-toggle="dropdown">Дія
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'home' %}">Student 2</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'students_edit' 2 %}">student edit</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="/journal/2">student visit</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'students_delete' 2 %}">student delete</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                <!-- End Students Students Line -->
-                <!-- Start Students Line -->
-                <tr>
-                    <td>3</td>
-                    <td><img class="img-circle" height="30" width="30" src="./img/icon-book2.png" alt="test"></td>
-                    <td><a title="Редагувати" href="#">test</a></td>
-                    <td><a title="Редагувати" href="#">test</a></td>
-                    <td>3</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle"
-                                    type="button"
-                                    data-toggle="dropdown">Дія
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'home' %}">Student 3</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'students_edit' 3 %}">student edit</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="/journal/3">student visit</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="{% url 'students_delete' 3 %}">student delete</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                {% endfor %}
                 <!-- End Students Students Line -->
                 </tbody>
             </table>
